@@ -21,21 +21,32 @@ CREATE TABLE public.profiles (
 -- RLS: Users can read their own profile, admins can read all
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
+-- Helper function to check admin status bypassing RLS
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN AS $$
+DECLARE
+  is_admin_flag BOOLEAN;
+BEGIN
+  SELECT (role = 'admin') INTO is_admin_flag FROM public.profiles WHERE id = auth.uid();
+  RETURN COALESCE(is_admin_flag, false);
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
 CREATE POLICY "Users can view own profile" 
 ON public.profiles FOR SELECT 
 USING (auth.uid() = id);
 
 CREATE POLICY "Admins can view all profiles" 
 ON public.profiles FOR SELECT 
-USING ((SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin');
+USING (public.is_admin());
 
 CREATE POLICY "Admins can update profiles" 
 ON public.profiles FOR UPDATE 
-USING ((SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin');
+USING (public.is_admin());
 
 CREATE POLICY "Admins can delete profiles" 
 ON public.profiles FOR DELETE 
-USING ((SELECT role FROM public.profiles WHERE id = auth.uid()) = 'admin');
+USING (public.is_admin());
 
 -- Automatically create profile on auth.users insert
 CREATE OR REPLACE FUNCTION public.handle_new_user()
