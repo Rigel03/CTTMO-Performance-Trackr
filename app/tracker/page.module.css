@@ -1,0 +1,108 @@
+.page { display: flex; flex-direction: column; gap: 14px; }
+.topBar { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; }
+.pageTitle { font-size: 1.3rem; font-weight: 800; }
+.pageSub { font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; }
+.filters select { min-width: 110px; }
+.tabContent { display: flex; flex-direction: column; gap: 12px; }
+
+/* ── Accordion ─────────────────────────────── */
+.accordion { display: flex; flex-direction: column; gap: 8px; }
+
+.accordionItem {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.accordionHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--color-accent, #FFD700);
+  border: none;
+  cursor: pointer;
+  gap: 12px;
+  transition: background 0.12s;
+  text-align: left;
+}
+.accordionHeader:hover { background: #f5c800; }
+
+.accordionTitle {
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: #000;
+  flex: 1;
+  min-width: 0;
+}
+
+.accordionBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(0,0,0,0.1);
+  border-radius: 20px;
+  padding: 2px 9px;
+  white-space: nowrap;
+  color: #000;
+}
+
+.accordionTally {
+  font-size: 0.76rem;
+  color: #000;
+  white-space: nowrap;
+}
+
+.accordionChevron {
+  font-size: 0.7rem;
+  color: rgba(0,0,0,0.5);
+  flex-shrink: 0;
+}
+
+/* Accordion body: list of indicator rows */
+.accordionBody { border-top: 1.5px solid var(--color-border); }
+
+.accordionRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.1s;
+}
+.accordionRow:last-child { border-bottom: none; }
+.accordionRow:hover { background: #fffce6; }
+
+.rowDesc {
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--color-text, #000);
+}
+
+/* Mini tally inside accordion row */
+.miniTally { text-align: center; min-width: 42px; }
+.miniTallyValue { display: block; font-size: 1.4rem; font-weight: 900; line-height: 1; }
+.miniTallyLabel { display: block; font-size: 0.64rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* Stepper in modal */
+.stepper { display: flex; align-items: center; gap: 0; }
+.stepperBtn {
+  width: 44px; height: 44px; border: 2px solid var(--color-border);
+  background: white; font-size: 1.4rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.stepperBtn:hover { background: var(--color-accent); }
+.stepperInput {
+  width: 80px; height: 44px; border: 2px solid var(--color-border);
+  border-left: none; border-right: none;
+  text-align: center; font-size: 1.3rem; font-weight: 800;
+}
+
+/* History table */
+.dateCell { font-size: 0.82rem; white-space: nowrap; }
+.notesCell { font-size: 0.8rem; color: var(--color-text-muted); max-width: 200px; }

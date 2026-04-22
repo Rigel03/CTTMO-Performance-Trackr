@@ -1,0 +1,109 @@
+.page { display: flex; flex-direction: column; gap: 8px; }
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.welcome { font-size: 1.2rem; font-weight: 700; }
+.name { text-decoration: underline; text-decoration-color: rgba(0,0,0,0.3); }
+.welcomeSub { font-size: 0.82rem; margin-top: 2px; color: rgba(0,0,0,0.65); }
+
+.periodBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0,0,0,0.12);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-weight: 900;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+  margin-top: 8px;
+}
+
+.kpiAccent { border-top: 4px solid var(--color-accent) !important; }
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  text-align: center;
+}
+
+.statCard[data-status="accomplished"] { background: var(--status-accomplished-bg); border-color: var(--status-accomplished-text); }
+.statCard[data-status="partial"]      { background: var(--status-partial-bg);      border-color: #c97a00; }
+.statCard[data-status="pending"]      { background: var(--status-pending-bg);      border-color: var(--status-pending-text); }
+.statCard[data-status="deferred"]     { background: var(--status-deferred-bg);     border-color: var(--status-deferred-text); }
+
+.statIcon { font-size: 1.5rem; }
+.statVal  { font-size: 1.6rem; font-weight: 900; }
+.statLabel{ font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: var(--color-text-muted); }
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.actionCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 20px 16px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fff;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all 0.15s;
+  box-shadow: var(--shadow-sm);
+}
+
+.actionCard:hover {
+  border-color: var(--color-accent);
+  background: #fffce6;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.actionIcon { font-size: 2rem; }
+.actionLabel { font-weight: 700; font-size: 0.9rem; }
+.actionSub { font-size: 0.75rem; color: var(--color-text-muted); }
+
+.notice {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  padding: 12px 16px;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+@media (max-width: 600px) {
+  .banner { flex-direction: column; align-items: flex-start; }
+  .periodBadge { align-self: flex-start; flex-direction: row; gap: 8px; }
+}

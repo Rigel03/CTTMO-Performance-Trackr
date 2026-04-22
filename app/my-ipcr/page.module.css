@@ -1,0 +1,120 @@
+.page { display: flex; flex-direction: column; gap: 16px; }
+
+.topBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.pageTitle { font-size: 1.3rem; font-weight: 800; }
+.pageSub { font-size: 0.82rem; color: var(--color-text-muted); margin-top: 2px; }
+
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filters select { min-width: 100px; }
+
+/* ── Section Label (Core / Support) ─────────────────────── */
+.section { display: flex; flex-direction: column; gap: 12px; }
+
+.sectionLabel {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 4px 0 2px;
+  border-bottom: 2px solid var(--color-accent);
+  margin-bottom: 2px;
+}
+
+/* ── Function Card (one per MFO name) ───────────────────── */
+.functionCard {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.functionHeader {
+  background: var(--color-accent);
+  color: var(--color-text);
+  font-weight: 800;
+  font-size: 0.88rem;
+  padding: 10px 16px;
+  border-bottom: 1.5px solid var(--color-accent-dark, #e6b800);
+}
+
+/* ── Indicator list inside a function card ──────────────── */
+.indicatorList { display: flex; flex-direction: column; }
+
+/* ── Single indicator row ───────────────────────────────── */
+.mfoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.mfoRow:last-child { border-bottom: none; }
+
+.mfoRow:hover { background: #fffce6; }
+
+.rowLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.rowDesc {
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--color-text, #000);
+  flex: 1;
+}
+
+.rowBtn {
+  flex-shrink: 0;
+  background: none;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.mfoRow:hover .rowBtn {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #000;
+}
+
+/* ── Modal ──────────────────────────────────────────────── */
+.modalMfo {
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border-left: 4px solid var(--color-accent);
+}
+
+.modalMfoName { font-weight: 700; font-size: 0.95rem; }
+.modalIndicator { font-size: 0.8rem; color: var(--color-text-muted); margin-top: 4px; }
