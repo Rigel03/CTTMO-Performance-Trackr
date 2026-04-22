@@ -5,17 +5,20 @@ export async function POST(request) {
     const body = await request.json();
     const { email, password, role, employeeId, displayName } = body;
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      return new Response(JSON.stringify({ error: "Vercel Environment Variables missing. Please add SUPABASE_SERVICE_ROLE_KEY to your Vercel project." }), { status: 500 });
+    }
+
     // We must use the service_role key to bypass RLS and use the admin auth API
-    const supabaseAdmin = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
-      {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false
-        }
+    const supabaseAdmin = createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
       }
-    );
+    });
 
     // 1. Create the user in auth.users
     const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({

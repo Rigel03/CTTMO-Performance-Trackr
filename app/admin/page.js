@@ -366,6 +366,7 @@ function UsersTab() {
   const [showAdd, setShowAdd] = useState(false);
   const [form, setForm] = useState({ email: '', password: '', role: 'employee', employeeId: '', displayName: '' });
   const [toast, setToast] = useState('');
+  const [editUser, setEditUser] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -386,6 +387,22 @@ function UsersTab() {
       load();
     } catch (err) {
       alert('Failed to create user: ' + err.message);
+    }
+  }
+
+  async function handleUpdateUser(e, uid) {
+    e.preventDefault();
+    try {
+      await updateUserProfile(uid, {
+        role: editUser.role,
+        employeeId: editUser.employeeId || null,
+        displayName: editUser.displayName
+      });
+      showToast('✅ User updated');
+      setEditUser(null);
+      load();
+    } catch (err) {
+      alert('Failed to update user: ' + err.message);
     }
   }
 
@@ -448,24 +465,52 @@ function UsersTab() {
                   const empType = emp?.employmentType;
                   return (
                     <tr key={u.uid}>
-                      <td style={{ fontWeight: 600 }}>{u.displayName || '—'}</td>
-                      <td>{u.email}</td>
-                      <td><span className={`badge badge-${u.role === 'admin' ? 'pending' : 'notstarted'}`}>{u.role?.toUpperCase()}</span></td>
-                      <td>{emp?.name || <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>Not linked</span>}</td>
-                      <td>
-                        {empType ? (
-                          <span className={`badge ${empType === 'plantilla' ? 'badge-accomplished' : 'badge-pending'}`} style={{ fontSize: '0.72rem' }}>
-                            {empType === 'plantilla' ? '💼 Plantilla' : '📋 JO/COS'}
-                          </span>
-                        ) : '—'}
-                      </td>
-                      <td>
-                        <button className="btn btn-danger btn-sm" onClick={async () => {
-                          if (!confirm('Delete this user profile?')) return;
-                          await deleteUserProfile(u.uid);
-                          load();
-                        }}>Delete</button>
-                      </td>
+                      {editUser?.uid === u.uid ? (
+                        <>
+                          <td colSpan={2}>
+                            <input className="form-control" style={{marginBottom: 4}} placeholder="Display Name" value={editUser.displayName || ''} onChange={e => setEditUser(prev => ({...prev, displayName: e.target.value}))} />
+                            <div style={{fontSize: '0.8rem', color: '#666'}}>{u.email}</div>
+                          </td>
+                          <td>
+                            <select className="form-control" value={editUser.role || 'employee'} onChange={e => setEditUser(prev => ({...prev, role: e.target.value}))}>
+                              <option value="employee">Employee</option>
+                              <option value="admin">Admin</option>
+                            </select>
+                          </td>
+                          <td colSpan={2}>
+                            <select className="form-control" value={editUser.employeeId || ''} onChange={e => setEditUser(prev => ({...prev, employeeId: e.target.value}))}>
+                              <option value="">-- No Employee Linked --</option>
+                              {employees.map(e => <option key={e.id} value={e.id}>{e.name} ({e.employmentType === 'plantilla' ? 'Plantilla' : 'JO/COS'})</option>)}
+                            </select>
+                          </td>
+                          <td>
+                            <button className="btn btn-primary btn-sm" onClick={(e) => handleUpdateUser(e, u.uid)} style={{marginRight: 4}}>Save</button>
+                            <button className="btn btn-outline btn-sm" onClick={() => setEditUser(null)}>Cancel</button>
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td style={{ fontWeight: 600 }}>{u.displayName || '—'}</td>
+                          <td>{u.email}</td>
+                          <td><span className={`badge badge-${u.role === 'admin' ? 'pending' : 'notstarted'}`}>{u.role?.toUpperCase()}</span></td>
+                          <td>{emp?.name || <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>Not linked</span>}</td>
+                          <td>
+                            {empType ? (
+                              <span className={`badge ${empType === 'plantilla' ? 'badge-accomplished' : 'badge-pending'}`} style={{ fontSize: '0.72rem' }}>
+                                {empType === 'plantilla' ? '💼 Plantilla' : '📋 JO/COS'}
+                              </span>
+                            ) : '—'}
+                          </td>
+                          <td>
+                            <button className="btn btn-outline btn-sm" onClick={() => setEditUser({...u})} style={{marginRight: 4}}>Edit</button>
+                            <button className="btn btn-danger btn-sm" onClick={async () => {
+                              if (!confirm('Delete this user profile?')) return;
+                              await deleteUserProfile(u.uid);
+                              load();
+                            }}>Delete</button>
+                          </td>
+                        </>
+                      )}
                     </tr>
                   );
                 })}
