@@ -184,7 +184,7 @@ export default function MyIPCRPage() {
     async function setup() {
       if (!user) return;
       if (isAdmin) {
-        const emps = await getEmployees();
+        const emps = await getEmployees('plantilla');
         setEmployees(emps);
         if (emps.length > 0) setEmpId(emps[0].id);
       } else {
@@ -254,10 +254,13 @@ export default function MyIPCRPage() {
           </div>
           <div className={styles.filters}>
             {isAdmin && (
-              <select className="form-control" value={empId || ''} onChange={e => setEmpId(e.target.value)}
-                style={{ minWidth: 160 }}>
-                {employees.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
-              </select>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>Plantilla Employees:</span>
+                <select className="form-control" value={empId || ''} onChange={e => setEmpId(e.target.value)}
+                  style={{ minWidth: 160 }}>
+                  {employees.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
+                </select>
+              </div>
             )}
             <select className="form-control" value={quarter} onChange={e => setQuarter(e.target.value)}>
               {['Q1','Q2','Q3','Q4'].map(q => <option key={q}>{q}</option>)}

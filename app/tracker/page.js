@@ -203,7 +203,7 @@ export default function TrackerPage() {
     async function setup() {
       if (!user) return;
       if (isAdmin) {
-        const emps = await getEmployees();
+        const emps = await getEmployees('jo_cos');
         setEmployees(emps);
         if (emps.length > 0) setEmpId(emps[0].id);
       } else {
@@ -323,9 +323,12 @@ export default function TrackerPage() {
           </div>
           <div className={styles.filters}>
             {isAdmin && (
-              <select className="form-control" value={empId || ''} onChange={e => setEmpId(e.target.value)}>
-                {employees.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
-              </select>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>JO/COS Employees:</span>
+                <select className="form-control" value={empId || ''} onChange={e => setEmpId(e.target.value)}>
+                  {employees.map(e => <option key={e.id} value={e.id}>{e.name}</option>)}
+                </select>
+              </div>
             )}
             <select className="form-control" value={year} onChange={e => setYear(Number(e.target.value))}>
               {[2024, 2025, 2026, 2027].map(y => <option key={y}>{y}</option>)}
